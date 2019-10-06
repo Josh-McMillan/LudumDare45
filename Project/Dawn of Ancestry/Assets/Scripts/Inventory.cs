@@ -5,12 +5,12 @@ using UnityEngine;
 
 public enum ResourceType
 {
-    NONE,
-    PEBBLE,
-    STICK,
-    FOOD,
-    WOOD,
-    STONE
+    NONE = 0,
+    PEBBLE = 1,
+    STICK = 2,
+    FOOD = 3,
+    WOOD = 4,
+    STONE = 5
 }
 
 public class Inventory : MonoBehaviour
@@ -20,6 +20,8 @@ public class Inventory : MonoBehaviour
     public static Action<string> OnFoodUpdate;
     public static Action<string> OnWoodUpdate;
     public static Action<string> OnStoneUpdate;
+
+    public static Action<ResourceType> OnItemGather;
 
     private static int pebble = 0;
     private static int stick = 0;
@@ -34,26 +36,31 @@ public class Inventory : MonoBehaviour
             case ResourceType.PEBBLE:
                 pebble += amount;
                 OnPebbleUpdate(pebble.ToString());
+                OnItemGather(ResourceType.PEBBLE);
                 break;
 
             case ResourceType.STICK:
                 stick += amount;
                 OnStickUpdate(stick.ToString());
+                OnItemGather(ResourceType.STICK);
                 break;
 
             case ResourceType.FOOD:
                 food += amount;
                 OnFoodUpdate(food.ToString());
+                OnItemGather(ResourceType.FOOD);
                 break;
 
             case ResourceType.WOOD:
                 wood += amount;
                 OnWoodUpdate(wood.ToString());
+                OnItemGather(ResourceType.WOOD);
                 break;
 
             case ResourceType.STONE:
                 stone += amount;
                 OnStoneUpdate(stone.ToString());
+                OnItemGather(ResourceType.STONE);
                 break;
         }
     }

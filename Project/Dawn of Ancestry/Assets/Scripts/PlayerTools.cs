@@ -5,10 +5,10 @@ using UnityEngine;
 
 public enum ToolType
 {
-    NONE,
-    AXE,
-    SPEAR,
-    HAMMER
+    NONE = 0,
+    AXE = 1,
+    SPEAR = 2,
+    HAMMER = 3
 }
 
 public class PlayerTools : MonoBehaviour
@@ -17,9 +17,11 @@ public class PlayerTools : MonoBehaviour
     public static Action<string> OnSpearUpdate;
     public static Action<string> OnHammerUpdate;
 
-    private static int axes = 1;
-    private static int spears = 1;
-    private static int hammers = 1;
+    public static Action<ToolType> OnToolCollect;
+
+    private static int axes = 0;
+    private static int spears = 0;
+    private static int hammers = 0;
 
     private static ToolType currentTool = ToolType.NONE;
 
@@ -56,18 +58,61 @@ public class PlayerTools : MonoBehaviour
 
     public static void NextTool()
     {
-        if ((int)currentTool == 3)
+        switch (currentTool)
         {
-            currentTool = 0;
-        }
-        else
-        {
-            currentTool++;
-        }
+            case ToolType.NONE:
 
-        if (!ToolAvailable(currentTool))
-        {
-            NextTool();
+                if (ToolAvailable(ToolType.AXE))
+                {
+                    currentTool = ToolType.AXE;
+                }
+                else if (ToolAvailable(ToolType.SPEAR))
+                {
+                    currentTool = ToolType.SPEAR;
+                }
+                else if (ToolAvailable(ToolType.HAMMER))
+                {
+                    currentTool = ToolType.HAMMER;
+                }
+                else
+                {
+                    currentTool = ToolType.NONE;
+                }
+                break;
+
+            case ToolType.AXE:
+
+                if (ToolAvailable(ToolType.SPEAR))
+                {
+                    currentTool = ToolType.SPEAR;
+                }
+                else if (ToolAvailable(ToolType.HAMMER))
+                {
+                    currentTool = ToolType.HAMMER;
+                }
+                else
+                {
+                    currentTool = ToolType.NONE;
+                }
+                break;
+
+            case ToolType.SPEAR:
+
+                if (ToolAvailable(ToolType.HAMMER))
+                {
+                    currentTool = ToolType.HAMMER;
+                }
+                else
+                {
+                    currentTool = ToolType.NONE;
+                }
+                break;
+
+            case ToolType.HAMMER:
+
+                currentTool = ToolType.NONE;
+                break;
+
         }
     }
 
@@ -78,16 +123,19 @@ public class PlayerTools : MonoBehaviour
             case ToolType.AXE:
                 axes += amount;
                 OnAxeUpdate(axes.ToString());
+                OnToolCollect(ToolType.AXE);
                 break;
 
             case ToolType.SPEAR:
                 spears += amount;
                 OnSpearUpdate(spears.ToString());
+                OnToolCollect(ToolType.SPEAR);
                 break;
 
             case ToolType.HAMMER:
                 hammers += amount;
                 OnHammerUpdate(hammers.ToString());
+                OnToolCollect(ToolType.HAMMER);
                 break;
         }
     }
@@ -100,25 +148,28 @@ public class PlayerTools : MonoBehaviour
                 return true;
 
             case ToolType.AXE:
-                if (axes >= 0)
+                if (axes > 0)
                 {
                     return true;
                 }
                 break;
 
             case ToolType.SPEAR:
-                if (spears >= 0)
+                if (spears > 0)
                 {
                     return true;
                 }
                 break;
 
             case ToolType.HAMMER:
-                if (hammers >= 0)
+                if (hammers > 0)
                 {
                     return true;
                 }
                 break;
+
+            default:
+                return false;
         }
 
         return false;

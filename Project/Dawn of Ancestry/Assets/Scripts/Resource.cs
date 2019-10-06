@@ -35,12 +35,18 @@ public class Resource : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        playerNear = true;
+        if (other.tag == "Player")
+        {
+            playerNear = true;
+        }
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        playerNear = false;
+        if (other.tag == "Player")
+        {
+            playerNear = false;
+        }
     }
 
     IEnumerator CollectResource()
