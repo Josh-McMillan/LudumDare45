@@ -18,6 +18,14 @@ public class ResourceUI : MonoBehaviour
     {
         switch (type)
         {
+            case ResourceType.PEBBLE:
+                Inventory.OnPebbleUpdate += UpdateUI;
+                break;
+
+            case ResourceType.STICK:
+                Inventory.OnStickUpdate += UpdateUI;
+                break;
+
             case ResourceType.FOOD:
                 Inventory.OnFoodUpdate += UpdateUI;
                 break;
@@ -36,6 +44,14 @@ public class ResourceUI : MonoBehaviour
     {
         switch (type)
         {
+            case ResourceType.PEBBLE:
+                Inventory.OnPebbleUpdate -= UpdateUI;
+                break;
+
+            case ResourceType.STICK:
+                Inventory.OnStickUpdate -= UpdateUI;
+                break;
+
             case ResourceType.FOOD:
                 Inventory.OnFoodUpdate -= UpdateUI;
                 break;

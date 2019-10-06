@@ -5,6 +5,9 @@ using UnityEngine;
 
 public enum ResourceType
 {
+    NONE,
+    PEBBLE,
+    STICK,
     FOOD,
     WOOD,
     STONE
@@ -12,10 +15,14 @@ public enum ResourceType
 
 public class Inventory : MonoBehaviour
 {
+    public static Action<string> OnPebbleUpdate;
+    public static Action<string> OnStickUpdate;
     public static Action<string> OnFoodUpdate;
     public static Action<string> OnWoodUpdate;
     public static Action<string> OnStoneUpdate;
 
+    private static int pebble = 0;
+    private static int stick = 0;
     private static int food = 0;
     private static int wood = 0;
     private static int stone = 0;
@@ -24,6 +31,16 @@ public class Inventory : MonoBehaviour
     {
         switch (type)
         {
+            case ResourceType.PEBBLE:
+                pebble += amount;
+                OnPebbleUpdate(pebble.ToString());
+                break;
+
+            case ResourceType.STICK:
+                stick += amount;
+                OnStickUpdate(stick.ToString());
+                break;
+
             case ResourceType.FOOD:
                 food += amount;
                 OnFoodUpdate(food.ToString());
@@ -39,14 +56,26 @@ public class Inventory : MonoBehaviour
                 OnStoneUpdate(stone.ToString());
                 break;
         }
-
-        Debug.Log("INVENTORY: " + food + " FOOD | " + wood + " WOOD | " + stone + " STONE");
     }
 
     public static bool CheckResourceAvailable(ResourceType type, int amount)
     {
         switch (type)
         {
+            case ResourceType.PEBBLE:
+                if (pebble >= amount)
+                {
+                    return true;
+                }
+                break;
+
+            case ResourceType.STICK:
+                if (stick >= amount)
+                {
+                    return true;
+                }
+                break;
+
             case ResourceType.FOOD:
                 if (food >= amount)
                 {
@@ -76,6 +105,30 @@ public class Inventory : MonoBehaviour
     {
         switch (type)
         {
+            case ResourceType.PEBBLE:
+                pebble -= amount;
+
+                if (pebble < 0)
+                {
+                    pebble = 0;
+                }
+
+                OnPebbleUpdate(pebble.ToString());
+
+                break;
+
+            case ResourceType.STICK:
+                stick -= amount;
+
+                if (stick < 0)
+                {
+                    stick = 0;
+                }
+
+                OnStickUpdate(stick.ToString());
+
+                break;
+
             case ResourceType.FOOD:
                 food -= amount;
 

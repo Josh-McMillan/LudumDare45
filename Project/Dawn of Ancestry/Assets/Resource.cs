@@ -9,6 +9,8 @@ public class Resource : MonoBehaviour
 
     [SerializeField] private float collectionTime = 2.0f;
 
+    [SerializeField] private ToolType toolType = ToolType.NONE;
+
     private bool playerNear = false;
 
     private bool canCollect = true;
@@ -22,9 +24,9 @@ public class Resource : MonoBehaviour
 
     private void Update()
     {
-        if (playerNear)
+        if (playerNear && Input.GetMouseButton(0))
         {
-            if (Input.GetMouseButton(0) && canCollect)
+            if (canCollect && PlayerTools.GetCurrentTool() == toolType)
             {
                 Debug.Log("Player is collecting resource!");
                 StartCoroutine(CollectResource());
