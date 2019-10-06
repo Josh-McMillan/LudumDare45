@@ -28,7 +28,6 @@ public class Resource : MonoBehaviour
         {
             if (canCollect && PlayerTools.GetCurrentTool() == toolType)
             {
-                Debug.Log("Player is collecting resource!");
                 StartCoroutine(CollectResource());
             }
         }
@@ -36,13 +35,11 @@ public class Resource : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("Player is near resource!");
         playerNear = true;
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        Debug.Log("Player has left resource!");
         playerNear = false;
     }
 
