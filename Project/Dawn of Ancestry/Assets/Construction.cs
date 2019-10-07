@@ -11,6 +11,8 @@ public class Construction : MonoBehaviour
 
     [SerializeField] private float buildSpeed;
 
+    [SerializeField] private ToolType requiredTool;
+
     private PlayerNear player;
 
     private float progress;
@@ -36,17 +38,29 @@ public class Construction : MonoBehaviour
         {
             if (Input.GetMouseButton(0) && player.IsNear)
             {
-                progress += buildSpeed;
-
-                sprite.sprite = GetCurrentSprite();
-
-                if (progress >= 100.0f)
+                if (requiredTool == ToolType.NONE)
                 {
-                    progress = 100.0f;
-                    isBuilt = true;
-                    OnConstructionComplete(gameObject);
+                    BuildStructure();
+                }
+                else if (PlayerTools.GetCurrentTool() == requiredTool)
+                {
+                    BuildStructure();
                 }
             }
+        }
+    }
+
+    private void BuildStructure()
+    {
+        progress += buildSpeed;
+
+        sprite.sprite = GetCurrentSprite();
+
+        if (progress >= 100.0f)
+        {
+            progress = 100.0f;
+            isBuilt = true;
+            OnConstructionComplete(gameObject);
         }
     }
 

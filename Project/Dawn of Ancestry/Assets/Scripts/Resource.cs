@@ -17,13 +17,13 @@ public class Resource : MonoBehaviour
 
     private WaitForSeconds waitTime;
 
-    private void Start()
+    protected void Start()
     {
         player = GetComponent<PlayerNear>();
         waitTime = new WaitForSeconds(collectionTime);
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         if (player.IsNear && Input.GetMouseButton(0))
         {
@@ -34,7 +34,7 @@ public class Resource : MonoBehaviour
         }
     }
 
-    IEnumerator CollectResource()
+    protected IEnumerator CollectResource()
     {
         canCollect = false;
         Inventory.GatherResource(resource, 1);

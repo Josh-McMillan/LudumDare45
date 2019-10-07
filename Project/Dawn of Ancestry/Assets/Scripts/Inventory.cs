@@ -15,6 +15,8 @@ public enum ResourceType
 
 public class Inventory : MonoBehaviour
 {
+    private static bool debugInfiniteInventory = false;
+
     public static Action<string> OnPebbleUpdate;
     public static Action<string> OnStickUpdate;
     public static Action<string> OnFoodUpdate;
@@ -28,6 +30,14 @@ public class Inventory : MonoBehaviour
     private static int food = 0;
     private static int wood = 0;
     private static int stone = 0;
+
+    private void Start()
+    {
+        if (debugInfiniteInventory)
+        {
+            Debug.LogWarning("DEBUG: INFINITE INVENTORY ACTIVATED");
+        }
+    }
 
     public static void GatherResource(ResourceType type, int amount)
     {
@@ -67,6 +77,11 @@ public class Inventory : MonoBehaviour
 
     public static bool CheckResourceAvailable(ResourceType type, int amount)
     {
+        if (debugInfiniteInventory)
+        {
+            return true;
+        }
+
         switch (type)
         {
             case ResourceType.PEBBLE:
@@ -110,6 +125,11 @@ public class Inventory : MonoBehaviour
 
     public static void ConsumeResource(ResourceType type, int amount)
     {
+        if (debugInfiniteInventory)
+        {
+            return;
+        }
+
         switch (type)
         {
             case ResourceType.PEBBLE:

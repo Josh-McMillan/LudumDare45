@@ -7,12 +7,7 @@ public class CraftingStation : MonoBehaviour
 {
     public static Action<bool> OnShowCraftingMenu;
 
-    private Construction construction;
-
-    private void Start()
-    {
-        construction = transform.parent.GetComponent<Construction>();
-    }
+    [SerializeField] private Construction construction;
 
     private void OnEnable()
     {
