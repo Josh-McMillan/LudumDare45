@@ -8,8 +8,12 @@ public class FireAnimation : MonoBehaviour
     [SerializeField] private float minIntensity = 0.75f;
     [SerializeField] private float maxIntensity = 1.5f;
     [SerializeField] private float flickerSpeed = 2.0f;
+    [SerializeField] private float minX = -1.0f;
+    [SerializeField] private float maxX = 1.0f;
+    [SerializeField] private float movementSpeed = 1.5f;
 
-    private float random;
+    private float flickerSeed;
+    private float movementSeed;
     private Light fire;
     private Animator animator;
     private bool animateFire = false;
@@ -17,7 +21,8 @@ public class FireAnimation : MonoBehaviour
 
     private void Start()
     {
-        random = Random.Range(0.0f, 65535.0f);
+        flickerSeed = Random.Range(0.0f, 65535.0f);
+        movementSeed = Random.Range(0.0f, 65535.0f);
         fire = GetComponent<Light>();
         animator = GetComponent<Animator>();
     }
@@ -38,7 +43,12 @@ public class FireAnimation : MonoBehaviour
 
     public void Animate()
     {
-        float noise = Mathf.PerlinNoise(random, Time.time * flickerSpeed);
-        fire.intensity = Mathf.Lerp(minIntensity, maxIntensity, noise);
+        float flickerNoise = Mathf.PerlinNoise(flickerSeed, Time.time * flickerSpeed);
+        fire.intensity = Mathf.Lerp(minIntensity, maxIntensity, flickerNoise);
+
+        float movementNoise = Mathf.PerlinNoise(Time.time * movementSpeed, flickerSeed);
+        float x = Mathf.Lerp(minX, maxX, movementNoise);
+
+        transform.localPosition = new Vector3(x, transform.localPosition.y, transform.localPosition.z);
     }
 }

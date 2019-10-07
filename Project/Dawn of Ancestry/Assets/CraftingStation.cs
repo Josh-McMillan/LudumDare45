@@ -7,25 +7,44 @@ public class CraftingStation : MonoBehaviour
 {
     public static Action<bool> OnShowCraftingMenu;
 
-    private bool playerNear = false;
+    private Construction construction;
+
+    private void Start()
+    {
+        construction = transform.parent.GetComponent<Construction>();
+    }
+
+    private void OnEnable()
+    {
+        Construction.OnConstructionComplete += ShowMenu;
+    }
+
+    private void OnDisable()
+    {
+        Construction.OnConstructionComplete -= ShowMenu;
+    }
+
+    private void ShowMenu(GameObject construction)
+    {
+        if (construction == transform.parent.gameObject)
+        {
+            OnShowCraftingMenu(true);
+        }
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "Player")
+        if (construction.IsBuilt)
         {
-            playerNear = true;
+            OnShowCraftingMenu(true);
         }
-
-        OnShowCraftingMenu(true);
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.tag == "Player")
+        if (construction.IsBuilt)
         {
-            playerNear = false;
+            OnShowCraftingMenu(false);
         }
-
-        OnShowCraftingMenu(false);
     }
 }

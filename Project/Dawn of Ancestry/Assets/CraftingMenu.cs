@@ -1,10 +1,20 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class CraftingMenu : MonoBehaviour
 {
+    public static Action OnMenuClose;
+
     private Animator animator;
+
+    private static bool isOpen = false;
+
+    public static bool IsOpen
+    {
+        get { return isOpen; }
+    }
 
     private void Start()
     {
@@ -24,6 +34,12 @@ public class CraftingMenu : MonoBehaviour
     private void UpdateCraftingMenu(bool showMenu)
     {
         animator.SetBool("OpenMenu", showMenu);
+        isOpen = showMenu;
+
+        if (isOpen == false)
+        {
+            OnMenuClose();
+        }
     }
 
     public void CraftAxe()

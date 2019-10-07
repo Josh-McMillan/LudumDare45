@@ -11,7 +11,7 @@ public class Resource : MonoBehaviour
 
     [SerializeField] private ToolType toolType = ToolType.NONE;
 
-    private bool playerNear = false;
+    private PlayerNear player;
 
     private bool canCollect = true;
 
@@ -19,33 +19,18 @@ public class Resource : MonoBehaviour
 
     private void Start()
     {
+        player = GetComponent<PlayerNear>();
         waitTime = new WaitForSeconds(collectionTime);
     }
 
     private void Update()
     {
-        if (playerNear && Input.GetMouseButton(0))
+        if (player.IsNear && Input.GetMouseButton(0))
         {
             if (canCollect && PlayerTools.GetCurrentTool() == toolType)
             {
                 StartCoroutine(CollectResource());
             }
-        }
-    }
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.tag == "Player")
-        {
-            playerNear = true;
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.tag == "Player")
-        {
-            playerNear = false;
         }
     }
 
