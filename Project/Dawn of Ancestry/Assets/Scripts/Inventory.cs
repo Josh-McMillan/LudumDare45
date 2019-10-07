@@ -15,7 +15,7 @@ public enum ResourceType
 
 public class Inventory : MonoBehaviour
 {
-    private static bool debugInfiniteInventory = false;
+    private static bool debugInfiniteInventory = true;
 
     public static Action<string> OnPebbleUpdate;
     public static Action<string> OnStickUpdate;

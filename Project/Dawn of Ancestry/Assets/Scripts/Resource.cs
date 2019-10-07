@@ -29,12 +29,20 @@ public class Resource : MonoBehaviour
         {
             if (canCollect && PlayerTools.GetCurrentTool() == toolType)
             {
-                StartCoroutine(CollectResource());
+                StartCoroutine(RunResourceCollection());
             }
         }
     }
 
-    protected IEnumerator CollectResource()
+    public void CollectResource()
+    {
+        if (canCollect)
+        {
+            StartCoroutine(RunResourceCollection());
+        }
+    }
+
+    protected IEnumerator RunResourceCollection()
     {
         canCollect = false;
         Inventory.GatherResource(resource, 1);
