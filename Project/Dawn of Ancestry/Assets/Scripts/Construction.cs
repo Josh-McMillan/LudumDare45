@@ -60,6 +60,7 @@ public class Construction : MonoBehaviour
         {
             progress = 100.0f;
             isBuilt = true;
+
             OnConstructionComplete(gameObject);
         }
     }

@@ -5,6 +5,10 @@ using UnityEngine;
 
 public class Resource : MonoBehaviour
 {
+    public static Action<bool> OnShowTip;
+
+    public static Action OnFirstResourceCollect;
+
     [SerializeField] private ResourceType resource;
 
     [SerializeField] private float collectionTime = 2.0f;
@@ -16,6 +20,8 @@ public class Resource : MonoBehaviour
     private bool canCollect = true;
 
     private WaitForSeconds waitTime;
+
+    private static bool hasCollected = false;
 
     protected void Start()
     {
@@ -46,6 +52,12 @@ public class Resource : MonoBehaviour
     {
         canCollect = false;
         Inventory.GatherResource(resource, 1);
+
+        if (!hasCollected)
+        {
+            hasCollected = true;
+            OnFirstResourceCollect();
+        }
 
         yield return waitTime;
 

@@ -44,8 +44,6 @@ public class CraftingMenu : MonoBehaviour
 
     public void CraftAxe()
     {
-        Debug.Log("Attempting to Craft Axe!");
-
         if (Inventory.CheckResourceAvailable(ResourceType.STICK, 2) && Inventory.CheckResourceAvailable(ResourceType.PEBBLE, 3))
         {
             Inventory.ConsumeResource(ResourceType.STICK, 2);
@@ -57,8 +55,6 @@ public class CraftingMenu : MonoBehaviour
 
     public void CraftSpear()
     {
-        Debug.Log("Attempting to Craft Spear!");
-
         if (Inventory.CheckResourceAvailable(ResourceType.STICK, 3) && Inventory.CheckResourceAvailable(ResourceType.PEBBLE, 2))
         {
             Inventory.ConsumeResource(ResourceType.STICK, 3);
@@ -70,8 +66,6 @@ public class CraftingMenu : MonoBehaviour
 
     public void CraftHammer()
     {
-        Debug.Log("Attempting to Craft Hammer!");
-
         if (Inventory.CheckResourceAvailable(ResourceType.STICK, 2) && Inventory.CheckResourceAvailable(ResourceType.PEBBLE, 4))
         {
             Inventory.ConsumeResource(ResourceType.STICK, 2);

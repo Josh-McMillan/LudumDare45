@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2027911972902425662}
   - component: {fileID: 2027911972902425661}
   - component: {fileID: 2027911972902425660}
+  - component: {fileID: 12869131140418948}
   m_Layer: 0
   m_Name: Human Factory
   m_TagString: Untagged
@@ -109,6 +110,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12cb346ba887c1f45a623bf9d57b5a56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &12869131140418948
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2027911972902425658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bd185e9d64545249a0ea93c5b5650c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  construction: {fileID: 2027911972989678250}
+  humanPrefab: {fileID: 8128130652554952882, guid: 98bb9ef1d822fa34c9381441bf8f2a72,
+    type: 3}
 --- !u!1 &2027911972989678249
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,9 +1,12 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public static Action OnPlayerFirstMove;
+
     [SerializeField] private float speed = 4.0f;
 
     private Rigidbody2D rb;
@@ -11,6 +14,8 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 input;
     private Animator animator;
     private SpriteRenderer sprite;
+
+    private static bool hasMoved = false;
 
     private void Start()
     {
@@ -31,6 +36,12 @@ public class PlayerMovement : MonoBehaviour
         else if (input.x > 0.0f)
         {
             sprite.flipX = false;
+        }
+
+        if (IsMoving() && !hasMoved)
+        {
+            hasMoved = true;
+            OnPlayerFirstMove();
         }
 
         if (IsMoving() || Input.GetMouseButton(0))

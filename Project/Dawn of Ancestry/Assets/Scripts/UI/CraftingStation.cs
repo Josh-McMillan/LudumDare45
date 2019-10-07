@@ -7,7 +7,11 @@ public class CraftingStation : MonoBehaviour
 {
     public static Action<bool> OnShowCraftingMenu;
 
+    public static Action OnFirstCampfireBuilt;
+
     [SerializeField] private Construction construction;
+
+    private static bool hasBuiltCampfire = false;
 
     private void OnEnable()
     {
@@ -23,6 +27,12 @@ public class CraftingStation : MonoBehaviour
     {
         if (construction == transform.parent.gameObject)
         {
+            if (!hasBuiltCampfire)
+            {
+                hasBuiltCampfire = true;
+                OnFirstCampfireBuilt();
+            }
+
             OnShowCraftingMenu(true);
         }
     }
